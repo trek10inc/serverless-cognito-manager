@@ -1,0 +1,35 @@
+{
+  "name": "serverless-cognito-manager",
+  "version": "1.0.0",
+  "engines": {
+    "node": ">=4.0"
+  },
+  "description": "Serverless Cognito Manager - Make it easy to use and manage cognito in your serverless projects",
+  "author": "trek10.com",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/trek10inc/serverless-cognito-manager"
+  },
+  "keywords": [
+    "serverless cognito manager",
+    "serverless framework plugin",
+    "serverless applications",
+    "serverless plugins",
+    "api gateway",
+    "lambda",
+    "cognito",
+    "aws",
+    "aws lambda",
+    "aws cognito",
+    "amazon",
+    "amazon web services",
+    "serverless.com"
+  ],
+  "main": "src/index.js",
+  "dependencies": {
+    "bluebird": "^3.0.6",
+    "lodash": "^4.11.2",
+    "node-zip": "^1.1.1"
+  }
+}

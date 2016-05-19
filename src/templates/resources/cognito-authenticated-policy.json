@@ -1,0 +1,27 @@
+{
+  "Type": "AWS::IAM::Policy",
+  "Properties": {
+    "PolicyName": "${stage}-${project}-cognito-authenticated-policy",
+    "PolicyDocument": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Action": [
+            "mobileanalytics:PutEvents",
+            "cognito-sync:*",
+            "cognito-identity:*"
+          ],
+          "Resource": [
+            "*"
+          ]
+        }
+      ]
+    },
+    "Roles": [
+      {
+        "Ref": "CognitoAuthenticatedRole"
+      }
+    ]
+  }
+}

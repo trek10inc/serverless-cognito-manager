@@ -1,0 +1,21 @@
+{
+  "AllowUnauthenticatedIdentities": false,
+  "CognitoIdentityProviders": [
+    {
+      "ClientId": "${cognitoUserIdentityPoolClientId}",
+      "ProviderName": "cognito-idp.${region}.amazonaws.com/${cognitoUserIdentityPoolId}"
+    }
+  ],
+  "SupportedLoginProviders": {
+    "string": "string"
+  },
+  "IdentityPoolName": "${project} ${stage}",
+  "Roles": {
+    "authenticated": "${cognitoAuthenticatedRole}",
+    "unauthenticated": "${cognitoUnauthenticatedRole}"
+  },
+  "DeveloperProviderName": "string",
+  "OpenIdConnectProviderARNs": [
+    "arn:aws:cognito-idp.${region}.amazonaws.com/${cognitoUserIdentityPoolId}"
+  ]
+}

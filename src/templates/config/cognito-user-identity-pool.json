@@ -1,0 +1,23 @@
+{
+  "AliasAttributes": [
+    "email"
+  ],
+  "EmailVerificationMessage": "{####}",
+  "EmailVerificationSubject": "Email Verification Subject",
+  "SmsAuthenticationMessage": "{####}",
+  "SmsVerificationMessage": "{####}",
+  "LambdaConfig": {
+  },
+  "MfaConfiguration": "OFF",
+  "Policies": {
+    "PasswordPolicy": {
+      "MinimumLength": 8,
+      "RequireLowercase": false,
+      "RequireNumbers": false,
+      "RequireSymbols": false,
+      "RequireUppercase": false
+    }
+  },
+  "PoolName": "${project}-${stage}",
+  "AutoVerifiedAttributes": []
+}

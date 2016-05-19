@@ -1,0 +1,9 @@
+{
+  "Description": "ARN of the Cognito unauthenticated role",
+  "Value": {
+    "Fn::GetAtt": [
+      "CognitoUnauthenticatedRole",
+      "Arn"
+    ]
+  }
+}
