@@ -560,7 +560,7 @@ module.exports = function(S) {
           spinner.start();
           return _this.aws.request('CognitoIdentityServiceProvider', 'createUserPoolClient', {
             ClientName: projectName + '-' + stage + '-client',
-            GenerateSecret: true,
+            GenerateSecret: false,
             UserPoolId: variables.cognitoUserIdentityPoolId
           }, stage, region, {});
         })
