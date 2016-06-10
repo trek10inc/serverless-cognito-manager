@@ -576,12 +576,22 @@ module.exports = function(S) {
             'stage': _.chain(stage).lowerCase().upperFirst().value(),
             'region': region,
             'cognitoUserIdentityPoolId': variables.cognitoUserIdentityPoolId,
-            'cognitoUserIdentityPoolClientId': variables.cognitoUserIdentityPoolClientId
+            'cognitoUserIdentityPoolClientId': variables.cognitoUserIdentityPoolClientId,
+            'cognitoAuthenticatedRole': variables.cognitoAuthenticatedRoleArn,
+            'cognitoUnauthenticatedRole': variables.cognitoUnauthenticatedRoleArn
           };
-          let paramsIdentityPoolPopulated = utils.populateTemplate(paramsIdentityPool, map);
-          delete paramsIdentityPoolPopulated.Roles;
+          let params = utils.populateTemplate(paramsIdentityPool, map);
+          paramsIdentityPool = _.clone(params);
+          delete params.Roles;
 
-          return _this.aws.request('CognitoIdentity', 'createIdentityPool', paramsIdentityPoolPopulated, stage, region);
+          return _this.aws.request('CognitoIdentity', 'createIdentityPool', params, stage, region);
+        })
+        .tap(identityPool => {
+          var params = {
+            IdentityPoolId: identityPool.IdentityPoolId, /* required */
+            Roles: paramsIdentityPool.Roles
+          };
+          return _this.aws.request('CognitoIdentity', 'setIdentityPoolRoles', params, stage, region);
         })
         .then (identityPool => {
           spinner.stop(true);
