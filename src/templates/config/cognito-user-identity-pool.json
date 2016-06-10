@@ -19,5 +19,29 @@
     }
   },
   "PoolName": "${project}-${stage}",
+  "CustomAttributes": [
+        {
+            "AttributeDataType": "String",
+            "DeveloperOnlyAttribute": false,
+            "Mutable": true,
+            "Name": "thingString",
+            "Required": false,
+            "StringAttributeConstraints": {
+                "MaxLength": "50",
+                "MinLength": "1"
+            }
+        },
+        {
+            "AttributeDataType": "Number",
+            "DeveloperOnlyAttribute": true,
+            "Mutable": false,
+            "Name": "SetId",
+            "Required": true,
+            "NumberAttributeConstraints": {
+                "MaxValue": "0",
+                "MinValue": "9001"
+            },
+        }
+      ],
   "AutoVerifiedAttributes": []
 }

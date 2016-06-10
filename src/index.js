@@ -523,7 +523,6 @@ module.exports = function(S) {
 
       // Populated variables grabbed here, we should use this throughout
       let variables = _.get(_this.populatedProject, `stages.${stage}.regions.${region}.variables`);
-
       // Already exists, don't create again and again
       if(variables.cognitoUserIdentityPoolId){
         return BbPromise.reject(new SError('Identity pool already exists for this stage / region!'));
@@ -536,22 +535,31 @@ module.exports = function(S) {
       let variableFileName = _this._getDeployVariablesFileName(stage, region);
       let projectConfig = S.getProject();
 
-      let paramsUserPool = _.get(projectConfig, 'custom.cognitoUserIdentityPool', {
+      let paramsUserPool = _.get(_this.populatedProject, 'custom.cognitoUserIdentityPool', {
         PoolName: 'Sample User Pool'
       });
-      let paramsIdentityPool = _.get(projectConfig, 'custom.cognitoIdentityPool', {
+
+      let paramsIdentityPool = _.get(_this.populatedProject, 'custom.cognitoIdentityPool', {
         AllowUnauthenticatedIdentities: false,
         IdentityPoolName: 'Sample Identity Pool'
       });
       return _this._deployLambdaTriggers(_this.populatedProject, stage, region)
         .then(() => {
-          // We should use _this.populatedProject instead of mapping on our own
-          let map = {
-            'project': projectName,
-            'stage': stage
-          };
-          let paramsUserPoolPopulated = utils.populateTemplate(paramsUserPool, map);
-          return _this.aws.request('CognitoIdentityServiceProvider', 'createUserPool', paramsUserPoolPopulated, stage, region, {});
+            return _this.aws.request('CognitoIdentityServiceProvider',
+                              'createUserPool',
+                              _.omit(paramsUserPool, ['CustomAttributes']),
+                              stage, region, {});
+        })
+        .tap(userPool => {
+            let params = {
+              CustomAttributes: paramsUserPool.CustomAttributes,
+              UserPoolId: userPool.UserPool.Id
+            };
+
+            return _this.aws.request('CognitoIdentityServiceProvider',
+                                     'addCustomAttributes',
+                                     params,
+                                     stage, region, {});
         })
         .then(userPool => {
           variables.cognitoUserIdentityPoolId = userPool.UserPool.Id;
@@ -572,9 +580,6 @@ module.exports = function(S) {
           spinner.start();
           // We should use _this.populatedProject instead of mapping on our own
           let map = {
-            'project': _.chain(projectName).lowerCase().upperFirst().value(),
-            'stage': _.chain(stage).lowerCase().upperFirst().value(),
-            'region': region,
             'cognitoUserIdentityPoolId': variables.cognitoUserIdentityPoolId,
             'cognitoUserIdentityPoolClientId': variables.cognitoUserIdentityPoolClientId,
             'cognitoAuthenticatedRole': variables.cognitoAuthenticatedRoleArn,
