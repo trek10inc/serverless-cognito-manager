@@ -40,7 +40,7 @@
             "NumberAttributeConstraints": {
                 "MaxValue": "0",
                 "MinValue": "9001"
-            },
+            }
         }
       ],
   "AutoVerifiedAttributes": []
