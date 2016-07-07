@@ -551,15 +551,17 @@ module.exports = function(S) {
                               stage, region, {});
         })
         .tap(userPool => {
-            let params = {
-              CustomAttributes: paramsUserPool.CustomAttributes,
-              UserPoolId: userPool.UserPool.Id
-            };
+            if(paramsUserPool.CustomAttributes && paramsUserPool.CustomAttributes.length){
+                let params = {
+                    CustomAttributes: paramsUserPool.CustomAttributes,
+                    UserPoolId: userPool.UserPool.Id
+                };
 
-            return _this.aws.request('CognitoIdentityServiceProvider',
-                                     'addCustomAttributes',
-                                     params,
-                                     stage, region, {});
+                return _this.aws.request('CognitoIdentityServiceProvider',
+                'addCustomAttributes',
+                params,
+                stage, region, {});
+            }
         })
         .then(userPool => {
           variables.cognitoUserIdentityPoolId = userPool.UserPool.Id;
