@@ -1,3 +1,14 @@
+# OBSOLETE / ABANDONED NOTICE
+
+I would not suggest using this for any reason. This only supported early versions of serverless and there are better ways to handle a lot of this now.
+
+I would highly suggest using CloudFormation to manage your Cognito resources.
+
+See
+- [http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-cognito-identitypool.html](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-cognito-identitypool.html)
+- [http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-cognito-userpool.html](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-cognito-userpool.html)
+
+
 Serverless Cognito Manager
 =============================
 
@@ -17,7 +28,7 @@ A plugin for creating and managing Cognito Federated Identity Pools, and User Id
 ]
 ```
 
-**Prep Step**  
+**Prep Step**
 Setup your entire project with various configurations and defaults quickly. For an idea of what all gets populated by the scaffold function check out the `src/templates` directory of this plugin.
 `serverless cognito scaffold`
 
